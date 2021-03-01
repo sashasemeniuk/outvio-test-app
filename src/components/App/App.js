@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import { Dropdown, Container, Tab, Card } from 'semantic-ui-react';
+import ReportedCasesChart from '../ReportedCasesChart/ReportedCasesChart';
 
 import './style.sass';
-import { Dropdown, Container, Tab, Card } from 'semantic-ui-react';
+import dataset from '../../assets/data/owid-covid-data.json';
 
-export function App() {
+import { formatDataset, getCountriesList } from '../../utils/helpers';
+
+function App() {
+  const data = formatDataset(dataset);
+
+  const [selectedCountry, setSelectedCountry] = useState(null);
+
   const panes = [
     {
-      menuItem: 'Tab 1',
-      render: () => <Tab.Pane>Tab 1 Content</Tab.Pane>,
+      menuItem: 'Reported Cases',
+      render: () => (
+        <Tab.Pane>
+          <ReportedCasesChart data={data.countries[selectedCountry] || data.world} />
+        </Tab.Pane>
+      ),
     },
     {
-      menuItem: 'Tab 2',
+      menuItem: 'Ranked Charts',
       render: () => <Tab.Pane>Tab 2 Content</Tab.Pane>,
     },
   ];
@@ -20,7 +33,15 @@ export function App() {
       <Container text>
         <Card fluid>
           <Card.Content>
-            <Dropdown placeholder="Select Country" fluid search selection />
+            <Dropdown
+              placeholder="Select Country"
+              fluid
+              search
+              selection
+              options={getCountriesList(dataset)}
+              onChange={(e, currentProps) => setSelectedCountry(currentProps.value)}
+              value={selectedCountry}
+            />
             <Tab panes={panes} />
           </Card.Content>
           <Card.Content extra>Chart controls here</Card.Content>
@@ -29,3 +50,5 @@ export function App() {
     </div>
   );
 }
+
+export default App;

@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 
 import { Dropdown, Container, Tab, Card } from 'semantic-ui-react';
 import ReportedCasesChart from '../ReportedCasesChart/ReportedCasesChart';
+import ChartControls from '../ChartControls/ChartControls';
 
 import './style.sass';
 import dataset from '../../assets/data/owid-covid-data.json';
 
 import { formatDataset, getCountriesList } from '../../utils/helpers';
+import { chartTypes } from '../../utils/constants';
 
 function App() {
   const data = formatDataset(dataset);
 
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedTab, setSelectedTab] = useState(0);
 
   const panes = [
     {
@@ -28,6 +31,8 @@ function App() {
     },
   ];
 
+  const currentChartType = selectedTab === 0 ? chartTypes.REPORTED_CASES : chartTypes.RANKED;
+
   return (
     <div className="app">
       <Container text>
@@ -42,9 +47,15 @@ function App() {
               onChange={(e, currentProps) => setSelectedCountry(currentProps.value)}
               value={selectedCountry}
             />
-            <Tab panes={panes} />
+            <Tab
+              panes={panes}
+              onTabChange={(e, tabData) => setSelectedTab(tabData.activeIndex)}
+              activeIndex={selectedTab}
+            />
           </Card.Content>
-          <Card.Content extra>Chart controls here</Card.Content>
+          <Card.Content extra>
+            <ChartControls type={currentChartType} />
+          </Card.Content>
         </Card>
       </Container>
     </div>

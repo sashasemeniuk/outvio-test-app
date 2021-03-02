@@ -10,11 +10,11 @@ function ChartControls({ type, changeChartOptions, chartOptions, countriesAmount
     () => ({
       [chartTypes.REPORTED_CASES]: {
         valueTypes: [
-          { text: 'Cases', value: valueTypes.CASES },
+          { text: 'Confirmed Cases', value: valueTypes.CASES },
           { text: 'Deaths', value: valueTypes.DEATHS },
         ],
         valueRanges: [
-          { text: 'New', value: valueRanges.NEW },
+          { text: 'Per Day', value: valueRanges.NEW },
           { text: 'Total', value: valueRanges.TOTAL },
         ],
       },

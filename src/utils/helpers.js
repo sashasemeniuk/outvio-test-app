@@ -40,3 +40,5 @@ export const formatDataset = (dataset) => {
     countries,
   };
 };
+
+export const generateNumbers = (amount) => Array.from({ length: amount }, (_, i) => i + 1);

@@ -8,13 +8,17 @@ import './style.sass';
 import dataset from '../../assets/data/owid-covid-data.json';
 
 import { formatDataset, getCountriesList } from '../../utils/helpers';
-import { chartTypes } from '../../utils/constants';
+import { chartTypes, defaultChartOptions } from '../../utils/constants';
 
 function App() {
   const data = formatDataset(dataset);
 
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedTab, setSelectedTab] = useState(0);
+  const [chartOptions, setChartOptions] = useState({
+    [chartTypes.REPORTED_CASES]: defaultChartOptions[chartTypes.REPORTED_CASES],
+    [chartTypes.RANKED]: defaultChartOptions[chartTypes.RANKED],
+  });
 
   const panes = [
     {
@@ -32,6 +36,9 @@ function App() {
   ];
 
   const currentChartType = selectedTab === 0 ? chartTypes.REPORTED_CASES : chartTypes.RANKED;
+
+  const changeChartOptions = (chartType, newOptions) =>
+    setChartOptions((prevState) => ({ ...prevState, [chartType]: { ...prevState[chartType], ...newOptions } }));
 
   return (
     <div className="app">
@@ -54,7 +61,11 @@ function App() {
             />
           </Card.Content>
           <Card.Content extra>
-            <ChartControls type={currentChartType} />
+            <ChartControls
+              type={currentChartType}
+              chartOptions={chartOptions}
+              changeChartOptions={changeChartOptions}
+            />
           </Card.Content>
         </Card>
       </Container>

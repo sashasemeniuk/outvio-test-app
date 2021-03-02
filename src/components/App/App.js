@@ -40,6 +40,8 @@ function App() {
   const changeChartOptions = (chartType, newOptions) =>
     setChartOptions((prevState) => ({ ...prevState, [chartType]: { ...prevState[chartType], ...newOptions } }));
 
+  const countriesList = getCountriesList(dataset);
+
   return (
     <div className="app">
       <Container text>
@@ -50,7 +52,7 @@ function App() {
               fluid
               search
               selection
-              options={getCountriesList(dataset)}
+              options={countriesList}
               onChange={(e, currentProps) => setSelectedCountry(currentProps.value)}
               value={selectedCountry}
             />
@@ -65,6 +67,7 @@ function App() {
               type={currentChartType}
               chartOptions={chartOptions}
               changeChartOptions={changeChartOptions}
+              countriesAmount={countriesList.length}
             />
           </Card.Content>
         </Card>

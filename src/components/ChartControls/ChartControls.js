@@ -5,7 +5,7 @@ import { Dropdown } from 'semantic-ui-react';
 import { chartTypes, valueRanges, valueTypes } from '../../utils/constants';
 import { generateNumbers } from '../../utils/helpers';
 
-function ChartControls({ type, changeChartOptions, chartOptions }) {
+function ChartControls({ type, changeChartOptions, chartOptions, countriesAmount }) {
   const chartControlsOptions = useMemo(
     () => ({
       [chartTypes.REPORTED_CASES]: {
@@ -23,10 +23,10 @@ function ChartControls({ type, changeChartOptions, chartOptions }) {
           { text: 'Total Cases', value: valueTypes.CASES },
           { text: 'Total Deaths', value: valueTypes.DEATHS },
         ],
-        countriesAmount: generateNumbers().map((number) => ({ text: number, value: number })),
+        countriesAmount: generateNumbers(countriesAmount).map((number) => ({ text: number, value: number })),
       },
     }),
-    [],
+    [countriesAmount],
   );
 
   if (type === chartTypes.REPORTED_CASES) {
@@ -86,6 +86,7 @@ ChartControls.propTypes = {
     valueRange: PropTypes.oneOf([valueRanges.NEW, valueRanges.TOTAL]),
     countriesAmount: PropTypes.number,
   }).isRequired,
+  countriesAmount: PropTypes.number.isRequired,
 };
 
 export default ChartControls;

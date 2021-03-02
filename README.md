@@ -1,5 +1,11 @@
-# outvio-test-app
+# Outvio Test App
 
-node - 15.10.0
+##### Dependencies:
+* node - 15.10.0
+* npm - 7.5.3
 
-npm - 7.5.3
+##### Run dev server
+* `yarn && yarn start`
+
+##### Build for prod
+* `yarn && yarn build`

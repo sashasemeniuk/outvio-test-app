@@ -3,15 +3,18 @@ import React, { useState } from 'react';
 import { Dropdown, Container, Tab, Card } from 'semantic-ui-react';
 import ReportedCasesChart from '../ReportedCasesChart/ReportedCasesChart';
 import ChartControls from '../ChartControls/ChartControls';
+import RankedChart from '../RankedChart/RankedChart';
 
 import './style.sass';
 import dataset from '../../assets/data/owid-covid-data.json';
 
-import { formatDataset, getCountriesList } from '../../utils/helpers';
+import { formatDataset, getCountriesList, getCountriesLabels, getTotals } from '../../utils/helpers';
 import { chartTypes, defaultChartOptions } from '../../utils/constants';
 
 function App() {
   const data = formatDataset(dataset);
+  const countriesLabels = getCountriesLabels(dataset);
+  const countriesTotals = getTotals(data.countries);
 
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -37,7 +40,16 @@ function App() {
     },
     {
       menuItem: 'Ranked Charts',
-      render: () => <Tab.Pane>Tab 2 Content</Tab.Pane>,
+      render: () => (
+        <Tab.Pane>
+          <RankedChart
+            data={countriesTotals}
+            chartOptions={chartOptions}
+            currentChartType={currentChartType}
+            countriesLabels={countriesLabels}
+          />
+        </Tab.Pane>
+      ),
     },
   ];
 

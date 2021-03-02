@@ -56,7 +56,7 @@ function App() {
               fluid
               search
               selection
-              options={countriesList}
+              options={[{ text: 'World', value: null }, ...countriesList]}
               onChange={(e, currentProps) => setSelectedCountry(currentProps.value)}
               value={selectedCountry}
             />

@@ -2,15 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Line } from 'react-chartjs-2';
+import { chartTypes, valueRanges, valueTypes } from '../../utils/constants';
+import { tokenize } from '../../utils/helpers';
 
-function ReportedCasesChart({ data }) {
+function ReportedCasesChart({ data, currentChartType, chartOptions }) {
+  const { valueRange, valueType } = chartOptions[currentChartType];
+  const valueField = `${valueRange}_${valueType}`;
+
   const formatData = () =>
-    data.map(({ date, new_cases }) => ({ x: new Date(date), y: new_cases })).filter((a) => !!a.y);
+    data.map(({ date, ...rest }) => ({ x: new Date(date), y: rest[valueField] })).filter((a) => !!a.y);
 
   const chartData = {
     datasets: [
       {
-        label: 'New Cases',
+        label: tokenize(valueField),
         fill: false,
         lineTension: 0.1,
         backgroundColor: 'rgba(75,192,192,0.4)',
@@ -56,6 +61,12 @@ ReportedCasesChart.propTypes = {
       new_deaths: PropTypes.number,
     }),
   ).isRequired,
+  currentChartType: PropTypes.oneOf([chartTypes.REPORTED_CASES, chartTypes.RANKED]),
+  chartOptions: PropTypes.shape({
+    valueType: PropTypes.oneOf([valueTypes.CASES, valueTypes.DEATHS]),
+    valueRange: PropTypes.oneOf([valueRanges.NEW, valueRanges.TOTAL]),
+    countriesAmount: PropTypes.number,
+  }).isRequired,
 };
 
 export default ReportedCasesChart;

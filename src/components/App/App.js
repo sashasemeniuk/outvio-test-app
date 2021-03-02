@@ -20,12 +20,18 @@ function App() {
     [chartTypes.RANKED]: defaultChartOptions[chartTypes.RANKED],
   });
 
+  const currentChartType = selectedTab === 0 ? chartTypes.REPORTED_CASES : chartTypes.RANKED;
+
   const panes = [
     {
       menuItem: 'Reported Cases',
       render: () => (
         <Tab.Pane>
-          <ReportedCasesChart data={data.countries[selectedCountry] || data.world} />
+          <ReportedCasesChart
+            data={data.countries[selectedCountry] || data.world}
+            currentChartType={currentChartType}
+            chartOptions={chartOptions}
+          />
         </Tab.Pane>
       ),
     },
@@ -34,8 +40,6 @@ function App() {
       render: () => <Tab.Pane>Tab 2 Content</Tab.Pane>,
     },
   ];
-
-  const currentChartType = selectedTab === 0 ? chartTypes.REPORTED_CASES : chartTypes.RANKED;
 
   const changeChartOptions = (chartType, newOptions) =>
     setChartOptions((prevState) => ({ ...prevState, [chartType]: { ...prevState[chartType], ...newOptions } }));

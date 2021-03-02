@@ -42,3 +42,11 @@ export const formatDataset = (dataset) => {
 };
 
 export const generateNumbers = (amount) => Array.from({ length: amount }, (_, i) => i + 1);
+
+export const capitalize = (string) => string.charAt(0).toUpperCase() + string.slice(1);
+
+export const tokenize = (string) =>
+  string
+    .split('_')
+    .map((token) => capitalize(token.toLowerCase()))
+    .join(' ');

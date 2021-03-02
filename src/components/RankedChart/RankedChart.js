@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Bar } from 'react-chartjs-2';
-import { chartTypes, valueRanges, valueTypes } from '../../utils/constants';
+import { chartTypes, valueRanges, valueTypes, defaultChartColor, highlightedChartColor } from '../../utils/constants';
 import { tokenize } from '../../utils/helpers';
 
-function RankedChart({ data, currentChartType, chartOptions, countriesLabels }) {
+function RankedChart({ data, currentChartType, chartOptions, countriesLabels, selectedCountry }) {
   const { valueRange, valueType, countriesAmount } = chartOptions[currentChartType];
   const valueField = `${valueRange}_${valueType}`;
 
@@ -13,6 +13,17 @@ function RankedChart({ data, currentChartType, chartOptions, countriesLabels }) 
     // eslint-disable-next-line react/prop-types
     .sort((a, b) => b.value - a.value)
     .slice(0, countriesAmount);
+
+  const backgroundColor = new Array(countriesAmount).fill(defaultChartColor);
+  const selectedCountryCodes = formattedData.map(({ country }) => country);
+
+  if (selectedCountry) {
+    const index = selectedCountryCodes.findIndex((label) => label === selectedCountry);
+
+    if (index !== -1) {
+      backgroundColor[index] = highlightedChartColor;
+    }
+  }
 
   const chartData = {
     labels: formattedData.map(({ country }) => countriesLabels[country]),
@@ -23,7 +34,7 @@ function RankedChart({ data, currentChartType, chartOptions, countriesLabels }) 
         barThickness: 8,
         maxBarThickness: 10,
         minBarLength: 2,
-        backgroundColor: 'rgba(75,192,192,1)',
+        backgroundColor,
         data: formattedData.map(({ value }) => value),
       },
     ],
@@ -48,6 +59,7 @@ RankedChart.propTypes = {
     countriesAmount: PropTypes.number,
   }).isRequired,
   countriesLabels: PropTypes.instanceOf(Object).isRequired,
+  selectedCountry: PropTypes.string,
 };
 
 export default RankedChart;

@@ -47,6 +47,7 @@ function App() {
             chartOptions={chartOptions}
             currentChartType={currentChartType}
             countriesLabels={countriesLabels}
+            selectedCountry={selectedCountry}
           />
         </Tab.Pane>
       ),

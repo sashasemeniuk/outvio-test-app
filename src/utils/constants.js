@@ -24,3 +24,6 @@ export const defaultChartOptions = {
     countriesAmount: 10,
   },
 };
+
+export const defaultChartColor = 'rgba(75,192,192,1)';
+export const highlightedChartColor = 'rgba(175,92,192,1)';

@@ -27,3 +27,4 @@ export const defaultChartOptions = {
 
 export const defaultChartColor = 'rgba(75,192,192,1)';
 export const highlightedChartColor = 'rgba(175,92,192,1)';
+export const darkModeChartFont = '#afbdd1';

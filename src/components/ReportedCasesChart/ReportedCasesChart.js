@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Line } from 'react-chartjs-2';
-import { chartTypes, valueRanges, valueTypes } from '../../utils/constants';
+import { chartTypes, valueRanges, valueTypes, darkModeChartFont } from '../../utils/constants';
 import { tokenize } from '../../utils/helpers';
 
 function ReportedCasesChart({ data, currentChartType, chartOptions, isDarkMode }) {
@@ -37,7 +37,7 @@ function ReportedCasesChart({ data, currentChartType, chartOptions, isDarkMode }
     ],
   };
 
-  const fontColor = isDarkMode ? '#afbdd1' : 'black';
+  const fontColor = isDarkMode ? darkModeChartFont : 'black';
 
   const options = {
     scales: {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { Dropdown, Container, Tab, Card, Radio } from 'semantic-ui-react';
 import ReportedCasesChart from '../ReportedCasesChart/ReportedCasesChart';
@@ -63,6 +63,18 @@ function App() {
 
   const countriesList = getCountriesList(dataset);
 
+  const chartControls = useMemo(
+    () => (
+      <ChartControls
+        type={currentChartType}
+        chartOptions={chartOptions}
+        changeChartOptions={changeChartOptions}
+        countriesAmount={countriesList.length}
+      />
+    ),
+    [chartOptions, countriesList.length, currentChartType],
+  );
+
   return (
     <div className={`app ${isDarkMode ? 'dark-mode' : ''}`}>
       <Radio
@@ -93,14 +105,7 @@ function App() {
               activeIndex={selectedTab}
             />
           </Card.Content>
-          <Card.Content extra>
-            <ChartControls
-              type={currentChartType}
-              chartOptions={chartOptions}
-              changeChartOptions={changeChartOptions}
-              countriesAmount={countriesList.length}
-            />
-          </Card.Content>
+          <Card.Content extra>{chartControls}</Card.Content>
         </Card>
       </Container>
     </div>

@@ -5,7 +5,7 @@ import { Bar } from 'react-chartjs-2';
 import { chartTypes, valueRanges, valueTypes, defaultChartColor, highlightedChartColor } from '../../utils/constants';
 import { tokenize } from '../../utils/helpers';
 
-function RankedChart({ data, currentChartType, chartOptions, countriesLabels, selectedCountry }) {
+function RankedChart({ data, currentChartType, chartOptions, countriesLabels, selectedCountry, isDarkMode }) {
   const { valueRange, valueType, countriesAmount } = chartOptions[currentChartType];
   const valueField = `${valueRange}_${valueType}`;
 
@@ -40,7 +40,29 @@ function RankedChart({ data, currentChartType, chartOptions, countriesLabels, se
     ],
   };
 
-  return <Bar data={chartData} />;
+  const fontColor = isDarkMode ? '#afbdd1' : 'black';
+
+  const options = {
+    scales: {
+      xAxes: [
+        {
+          ticks: { fontColor },
+        },
+      ],
+      yAxes: [
+        {
+          ticks: { fontColor },
+        },
+      ],
+    },
+    legend: {
+      labels: {
+        fontColor,
+      },
+    },
+  };
+
+  return <Bar data={chartData} options={options} />;
 }
 
 RankedChart.propTypes = {
@@ -60,6 +82,7 @@ RankedChart.propTypes = {
   }).isRequired,
   countriesLabels: PropTypes.instanceOf(Object).isRequired,
   selectedCountry: PropTypes.string,
+  isDarkMode: PropTypes.bool,
 };
 
 export default RankedChart;

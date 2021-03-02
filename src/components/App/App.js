@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Dropdown, Container, Tab, Card } from 'semantic-ui-react';
+import { Dropdown, Container, Tab, Card, Radio } from 'semantic-ui-react';
 import ReportedCasesChart from '../ReportedCasesChart/ReportedCasesChart';
 import ChartControls from '../ChartControls/ChartControls';
 import RankedChart from '../RankedChart/RankedChart';
@@ -15,6 +15,8 @@ function App() {
   const data = formatDataset(dataset);
   const countriesLabels = getCountriesLabels(dataset);
   const countriesTotals = getTotals(data.countries);
+
+  const [isDarkMode, setIsDarkMode] = useState(JSON.parse(localStorage.getItem('darkMode')) || false);
 
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -34,6 +36,7 @@ function App() {
             data={data.countries[selectedCountry] || data.world}
             currentChartType={currentChartType}
             chartOptions={chartOptions}
+            isDarkMode={isDarkMode}
           />
         </Tab.Pane>
       ),
@@ -48,6 +51,7 @@ function App() {
             currentChartType={currentChartType}
             countriesLabels={countriesLabels}
             selectedCountry={selectedCountry}
+            isDarkMode={isDarkMode}
           />
         </Tab.Pane>
       ),
@@ -60,9 +64,19 @@ function App() {
   const countriesList = getCountriesList(dataset);
 
   return (
-    <div className="app">
+    <div className={`app ${isDarkMode ? 'dark-mode' : ''}`}>
+      <Radio
+        toggle
+        className="dark-mode-toggle"
+        label="Dark Mode"
+        checked={isDarkMode}
+        onChange={(e, { checked }) => {
+          setIsDarkMode(checked);
+          localStorage.setItem('darkMode', JSON.stringify(checked));
+        }}
+      />
       <Container>
-        <Card fluid>
+        <Card fluid className={isDarkMode ? 'dark-mode' : ''}>
           <Card.Content>
             <Dropdown
               placeholder="Select Country"

@@ -5,7 +5,7 @@ import { Line } from 'react-chartjs-2';
 import { chartTypes, valueRanges, valueTypes } from '../../utils/constants';
 import { tokenize } from '../../utils/helpers';
 
-function ReportedCasesChart({ data, currentChartType, chartOptions }) {
+function ReportedCasesChart({ data, currentChartType, chartOptions, isDarkMode }) {
   const { valueRange, valueType } = chartOptions[currentChartType];
   const valueField = `${valueRange}_${valueType}`;
 
@@ -37,14 +37,27 @@ function ReportedCasesChart({ data, currentChartType, chartOptions }) {
     ],
   };
 
+  const fontColor = isDarkMode ? '#afbdd1' : 'black';
+
   const options = {
     scales: {
       xAxes: [
         {
           type: 'time',
           distribution: 'series',
+          ticks: { fontColor },
         },
       ],
+      yAxes: [
+        {
+          ticks: { fontColor },
+        },
+      ],
+    },
+    legend: {
+      labels: {
+        fontColor,
+      },
     },
   };
 
@@ -67,6 +80,7 @@ ReportedCasesChart.propTypes = {
     valueRange: PropTypes.oneOf([valueRanges.NEW, valueRanges.TOTAL]),
     countriesAmount: PropTypes.number,
   }).isRequired,
+  isDarkMode: PropTypes.bool,
 };
 
 export default ReportedCasesChart;

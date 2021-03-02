@@ -1,2 +1,46 @@
 #root
   height: 100%
+
+$fontColor-dark: #afbdd1
+$bgColor-dark: #2b3648
+$borderColor-dark: #313c4e
+$bgColor-darker: #212936
+
+.dark-mode
+  background: $bgColor-dark !important
+  color: $fontColor-dark !important
+
+  .tabular.menu
+    .item
+      border: none
+    .active
+      border-color: $borderColor-dark !important
+      background-color: $bgColor-dark !important
+
+    .item, .active
+      color: $fontColor-dark !important
+
+  label
+    color: $fontColor-dark !important
+
+  .dropdown
+    border-color: $borderColor-dark !important
+
+    &, .item, .text, .message
+      background-color: $bgColor-dark !important
+      color: $fontColor-dark !important
+
+    .item, .menu
+      border: none !important
+
+  &.card
+    box-shadow: none !important
+    border-color: $borderColor-dark !important
+    color: $fontColor-dark !important
+    .content
+      background-color: $bgColor-darker !important
+      .segment
+        background-color: $bgColor-darker !important
+        color: $fontColor-dark !important
+        border-color: $borderColor-dark !important
+

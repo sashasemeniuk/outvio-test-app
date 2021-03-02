@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 
-import { Dropdown, Container, Tab, Card, Radio } from 'semantic-ui-react';
+import { Dropdown, Container, Tab, Card, Checkbox } from 'semantic-ui-react';
 import ReportedCasesChart from '../ReportedCasesChart/ReportedCasesChart';
 import ChartControls from '../ChartControls/ChartControls';
 import RankedChart from '../RankedChart/RankedChart';
@@ -77,10 +77,15 @@ function App() {
 
   return (
     <div className={`app ${isDarkMode ? 'dark-mode' : ''}`}>
-      <Radio
+      <Checkbox
         toggle
         className="dark-mode-toggle"
-        label="Dark Mode"
+        id="dark-mode-toggle"
+        label={
+          <label htmlFor="dark-mode-toggle" id="dark-mode-toggle--label">
+            Dark Mode
+          </label>
+        }
         checked={isDarkMode}
         onChange={(e, { checked }) => {
           setIsDarkMode(checked);

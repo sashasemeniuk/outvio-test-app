@@ -61,7 +61,7 @@ function App() {
 
   return (
     <div className="app">
-      <Container text>
+      <Container>
         <Card fluid>
           <Card.Content>
             <Dropdown

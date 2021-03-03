@@ -29,53 +29,53 @@ function ChartControls({ type, changeChartOptions, chartOptions, countriesAmount
     [countriesAmount],
   );
 
-  if (type === chartTypes.REPORTED_CASES) {
-    const dropdownOptions = chartControlsOptions[chartTypes.REPORTED_CASES];
-    const currentChartOptions = chartOptions[chartTypes.REPORTED_CASES];
+  let dropdownOptions;
+  let currentChartOptions;
 
-    return (
-      <>
-        <Dropdown
-          selection
-          options={dropdownOptions.valueTypes}
-          value={currentChartOptions.valueType}
-          onChange={(e, data) => changeChartOptions(chartTypes.REPORTED_CASES, { valueType: data.value })}
-        />
-        <Dropdown
-          selection
-          options={dropdownOptions.valueRanges}
-          value={currentChartOptions.valueRange}
-          onChange={(e, data) => changeChartOptions(chartTypes.REPORTED_CASES, { valueRange: data.value })}
-        />
-      </>
-    );
+  switch (type) {
+    case chartTypes.REPORTED_CASES:
+      dropdownOptions = chartControlsOptions[chartTypes.REPORTED_CASES];
+      currentChartOptions = chartOptions[chartTypes.REPORTED_CASES];
+
+      return (
+        <>
+          <Dropdown
+            selection
+            options={dropdownOptions.valueTypes}
+            value={currentChartOptions.valueType}
+            onChange={(e, data) => changeChartOptions(chartTypes.REPORTED_CASES, { valueType: data.value })}
+          />
+          <Dropdown
+            selection
+            options={dropdownOptions.valueRanges}
+            value={currentChartOptions.valueRange}
+            onChange={(e, data) => changeChartOptions(chartTypes.REPORTED_CASES, { valueRange: data.value })}
+          />
+        </>
+      );
+    default:
+      dropdownOptions = chartControlsOptions[chartTypes.RANKED];
+      currentChartOptions = chartOptions[chartTypes.RANKED];
+
+      return (
+        <>
+          <Dropdown
+            selection
+            options={dropdownOptions.valueTypes}
+            value={currentChartOptions.valueType}
+            onChange={(e, data) =>
+              changeChartOptions(chartTypes.RANKED, { valueType: data.value, valueRange: valueRanges.TOTAL })
+            }
+          />
+          <Dropdown
+            selection
+            options={dropdownOptions.countriesAmount}
+            value={currentChartOptions.countriesAmount}
+            onChange={(e, data) => changeChartOptions(chartTypes.RANKED, { countriesAmount: data.value })}
+          />
+        </>
+      );
   }
-
-  if (type === chartTypes.RANKED) {
-    const dropdownOptions = chartControlsOptions[chartTypes.RANKED];
-    const currentChartOptions = chartOptions[chartTypes.RANKED];
-
-    return (
-      <>
-        <Dropdown
-          selection
-          options={dropdownOptions.valueTypes}
-          value={currentChartOptions.valueType}
-          onChange={(e, data) =>
-            changeChartOptions(chartTypes.RANKED, { valueType: data.value, valueRange: valueRanges.TOTAL })
-          }
-        />
-        <Dropdown
-          selection
-          options={dropdownOptions.countriesAmount}
-          value={currentChartOptions.countriesAmount}
-          onChange={(e, data) => changeChartOptions(chartTypes.RANKED, { countriesAmount: data.value })}
-        />
-      </>
-    );
-  }
-
-  return <div>{type}</div>;
 }
 
 ChartControls.propTypes = {
